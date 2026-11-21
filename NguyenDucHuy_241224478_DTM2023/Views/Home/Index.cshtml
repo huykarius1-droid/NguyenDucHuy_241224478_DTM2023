@@ -1,0 +1,32 @@
+﻿@model IEnumerable<NguyenDucHuy_241224478_DTM2023.Models.HangHoa>
+
+<div id="main-content">
+    <partial name="NguyenDucHuy_MainContent" model="Model" />
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".loai-hang-item").click(function (e) {
+                e.preventDefault();
+
+                var idLoai = $(this).data("id");
+
+                $(".menu ul li").removeClass("active");
+                $(this).parent().addClass("active");
+
+                $.ajax({
+                    url: '/Home/HangHoaTheoLoai',
+                    type: 'GET',
+                    data: { maLoai: idLoai },
+                    success: function (ketQuaHtml) {
+                        $("#main-content").html(ketQuaHtml);
+                    },
+                    error: function () {
+                        alert("Có lỗi xảy ra khi tải danh sách hàng hóa!");
+                    }
+                });
+            });
+        });
+    </script>
+}
